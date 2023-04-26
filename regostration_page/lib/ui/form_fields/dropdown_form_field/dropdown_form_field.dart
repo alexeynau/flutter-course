@@ -27,41 +27,45 @@ class _MyDropDownFormFieldState extends State<MyDropDownFormField> {
     return SizedBox(
       width: 380,
       height: 60,
-      child: DropdownButtonFormField(
-        validator: (value) => value == null ? hintText : null,
-        value: null,
-        items: _dropDownItems,
-        onChanged: (e) {},
-        itemHeight: 60,
-        icon: const Icon(Icons.keyboard_arrow_down_sharp),
-        iconSize: 36,
-        menuMaxHeight: 300,
-        dropdownColor: const Color(0xFFF1F1F1),
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20.0,
-          color: Color(0xFF6B6B6B),
-        ),
-        borderRadius: BorderRadius.circular(10),
-        decoration: InputDecoration(
-          hintText: hintText,
-          filled: true,
-          fillColor: const Color(0xFFF1F1F1),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          hintStyle: const TextStyle(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 380),
+        child: DropdownButtonFormField(
+          validator: (value) => value == null ? hintText : null,
+          elevation: 0,
+          value: null,
+          items: _dropDownItems,
+          onChanged: (e) {},
+          itemHeight: 60,
+          icon: const Icon(Icons.keyboard_arrow_down_sharp),
+          iconSize: 36,
+          menuMaxHeight: 300,
+          dropdownColor: const Color(0xFFF1F1F1),
+          style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 20.0,
             color: Color(0xFF6B6B6B),
           ),
-          labelStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.0,
-            color: Color(0xFF6B6B6B),
+          borderRadius: BorderRadius.circular(10),
+          decoration: InputDecoration(
+            hintText: hintText,
+            filled: true,
+            fillColor: const Color(0xFFF1F1F1),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            hintStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20.0,
+              color: Color(0xFF6B6B6B),
+            ),
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20.0,
+              color: Color(0xFF6B6B6B),
+            ),
+            contentPadding: const EdgeInsets.fromLTRB(30, 0, 21, 36),
           ),
-          contentPadding: const EdgeInsets.fromLTRB(30, 0, 21, 36),
         ),
       ),
     );

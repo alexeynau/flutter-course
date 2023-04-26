@@ -10,6 +10,11 @@ class MyTextFromField extends StatelessWidget {
       width: 380,
       height: 60,
       child: TextFormField(
+        style: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20.0,
+          color: Color(0xFF6B6B6B),
+        ),
         decoration: InputDecoration(
           filled: true,
           fillColor: const Color(0xFFF1F1F1),

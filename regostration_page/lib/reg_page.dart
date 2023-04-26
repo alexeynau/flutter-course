@@ -33,60 +33,123 @@ class _RegPageState extends State<RegPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            const Icon(Icons.arrow_back),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // title
-                const Text(
-                  'Регистрация',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 32,
-                  ),
-                ),
-
-                // inputs
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
-                  child: Column(
-                    children: [
-                      // input fields
-                      ..._textFieldList.map((e) {
-                        return Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: MyTextFromField(
-                            label: e,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: Image.asset('assets/images/background.png').image),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24, top: 50),
+                          child: IconButton(
+                            iconSize: 40,
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              color: Color(0xFF363636),
+                            ),
                           ),
-                        );
-                      }).toList(),
-
-                      // dropdown field
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: MyDropDownFormField(
-                          hintText: 'Город проживания',
-                          items: {for (var element in _citiesList) element : element },
                         ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // title
+                  const Text(
+                    'Регистрация',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color(0xFF363636),
+                      fontWeight: FontWeight.w800,
+                      fontSize: 32,
+                    ),
+                  ),
 
-                // registration button
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  child: RegButton(
-                    label: 'Зарегистрироваться',
+                  // inputs
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
+                    child: Column(
+                      children: [
+                        // input fields
+                        ..._textFieldList.map((e) {
+                          return Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: MyTextFromField(
+                              label: e,
+                            ),
+                          );
+                        }).toList(),
+
+                        // dropdown field
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: MyDropDownFormField(
+                            hintText: 'Город проживания',
+                            items: {
+                              for (var element in _citiesList) element: element
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+
+                  // registration button
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: RegButton(
+                      label: 'Зарегистрироваться',
+                    ),
+                  ),
+
+                  // private policy agreement
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15, left: 60, right: 60, bottom: 58),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: const TextSpan(
+                        text: 'Нажимая зарегистрироваться, вы соглашаетесь с ',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: Color(0xFF6B6B6B)),
+                        children: <TextSpan>[
+                          TextSpan(
+                            mouseCursor: MaterialStateMouseCursor.clickable,
+                            text: 'Политикой Конфиндециальности',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: Color(0xFF6B6B6B),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
