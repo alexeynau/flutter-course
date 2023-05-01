@@ -30,6 +30,8 @@ class _RegPageState extends State<RegPage> {
     'City9',
   ];
 
+  double h = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,17 +100,39 @@ class _RegPageState extends State<RegPage> {
                         // dropdown field
                         Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: MyDropDownFormField(
-                            hintText: 'Город проживания',
-                            items: {
-                              for (var element in _citiesList) element: element
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                h = (h == 0) ? 100 : 0;
+                              });
                             },
+                            child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              color: Colors.amber,
+                              
+                            ),
+                          )
                           ),
-                        )
+                        
                       ],
                     ),
                   ),
-
+                  AnimatedContainer(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    duration: const Duration(milliseconds: 100),
+                    width: h,
+                    color: Colors.red,
+                    height: h,
+                    child: ListView(
+                      children: [
+                        Text('asdd'),
+                        Text('asdd'),
+                        Text('asdd'),
+                        Text('asdd'),
+                      ],
+                    ),
+                  ),
                   // registration button
                   const Padding(
                     padding: EdgeInsets.fromLTRB(24, 0, 24, 0),

@@ -19,9 +19,12 @@ class _MyDropDownFormFieldState extends State<MyDropDownFormField> {
   @override
   void initState() {
     super.initState();
+
+    // init list of dropdown items
     items.forEach((key, value) =>
         _dropDownItems.add(DropdownMenuItem(value: value, child: Text(key))));
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
