@@ -112,10 +112,18 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 )
-              : SliverList(
-                  delegate: SliverChildListDelegate(
-                    listOfSmallCards,
-                  ),
+              : 
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: hotelPreviews.length,
+                    (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.all(15),
+                      child: HotelCardSmall(
+                        hotelPreview: hotelPreviews[index],
+                      ),
+                    );
+                  }),
                 ),
         ],
       ),
