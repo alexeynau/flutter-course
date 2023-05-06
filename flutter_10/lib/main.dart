@@ -13,8 +13,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      // routes
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          
           case SignUpPage.routeName:
             return MaterialPageRoute(builder: (context) => const SignUpPage());
           case SignInPage.routeName:
