@@ -3,8 +3,8 @@ import 'package:flutter_9/entity/hotel.dart';
 import 'package:flutter_9/pages/hotel_page.dart';
 
 class HotelCardSmall extends StatefulWidget {
-  HotelPreview hotelPreview;
-  HotelCardSmall({super.key, required this.hotelPreview});
+  final HotelPreview hotelPreview;
+  const HotelCardSmall({super.key, required this.hotelPreview});
 
   @override
   State<HotelCardSmall> createState() => _HotelCardSmallState();
@@ -64,7 +64,6 @@ void initState() {
               child: SizedBox(
                 child: GestureDetector(
                   onTap: () {
-                    print('OK');
                     Navigator.of(context).pushNamed('/hotel', arguments: {
                       'hotel' : widget.hotelPreview,
                     });

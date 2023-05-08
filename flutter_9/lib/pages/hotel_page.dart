@@ -37,17 +37,10 @@ class _HotelPageState extends State<HotelPage> {
       var data = response.data;
       _hotel = Hotel.fromJson(data);
       print(_hotel);
-      // for (var hotelPreview in hotelPreviews) {
-      //   response =  await _dio.get(urlBase + hotelPreview.uuid!);
-      //   data = response.data;
-      //   hotels.add(Hotel.fromJson(data));
-
-      //   print(hotels);
-      // }
-      // print(hotels);
     } on DioError catch (e) {
       errorMessage = e.response!.data['message'];
       _hasError = true;
+      print('has error');
     }
     setState(() {
       _isLoading = false;
@@ -56,59 +49,95 @@ class _HotelPageState extends State<HotelPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_hotel.name!),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(height: 400.0),
-              items: _hotel.photos!.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(color: Colors.amber),
-                      child: Image.asset(
-                        'assets/images/$i',
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
+    return _isLoading
+        ? Scaffold(
+            appBar: AppBar(),
+            body: const Center(child: CircularProgressIndicator()),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(!_hasError ? _hotel.name! : 'Ошибка'),
             ),
-            Column(
-              children: [
-                Text('Страна: ${_hotel.address!.country}'),
-                Text('Город: ${_hotel.address!.city}'),
-                Text('Улица: ${_hotel.address!.street}'),
-                Text('Рейтинг: ${_hotel.rating}'),
-              ],
-            ),
-            Text('Сервисы:'),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    Text('Платные'),
-                    ..._hotel.services!.paid!.map((e) => Text(e)).toList()
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text('Бесплатные'),
-                    ..._hotel.services!.free!.map((e) => Text(e)).toList()
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+            body: _hasError
+                ? const Center(child: Text('Контент временно недоступен'))
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CarouselSlider(
+                          options: CarouselOptions(height: 400.0),
+                          items: _hotel.photos!.map((i) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  decoration:
+                                      const BoxDecoration(color: Colors.amber),
+                                  child: Image.asset(
+                                    'assets/images/$i',
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
+
+                        //address
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Страна: ${_hotel.address!.country}'),
+                                Text('Город: ${_hotel.address!.city}'),
+                                Text('Улица: ${_hotel.address!.street}'),
+                                Text('Рейтинг: ${_hotel.rating}'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Text('Сервисы:'),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Платные:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  ..._hotel.services!.paid!
+                                      .map((e) => Text(e))
+                                      .toList()
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Бесплатные:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  ..._hotel.services!.free!
+                                      .map((e) => Text(e))
+                                      .toList()
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ));
   }
 }

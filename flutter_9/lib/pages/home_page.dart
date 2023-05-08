@@ -40,15 +40,8 @@ class _HomePageState extends State<HomePage> {
       hotelPreviews = data
           .map<HotelPreview>((hotel) => HotelPreview.fromJson(hotel))
           .toList();
-      print(hotelPreviews);
-      // for (var hotelPreview in hotelPreviews) {
-      //   response =  await _dio.get(urlBase + hotelPreview.uuid!);
-      //   data = response.data;
-      //   hotels.add(Hotel.fromJson(data));
-
-      //   print(hotels);
-      // }
-      // print(hotels);
+      //print(hotelPreviews);
+     
     } on DioError catch (e) {
       errorMessage = e.response!.data['message'];
       _hasError = true;
@@ -58,23 +51,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Iterable<HotelPreview> getListOfHotelPreview() {
-  //   List data = getDataDioFrom(urlBase + uuid);
-  //   return data.map<HotelPreview>((hotel) => HotelPreview.fromJson(hotel));
-  // }
-
-  // getListOfHotels() {
-  //   Iterable<HotelPreview> hotelPreviews = getListOfHotelPreview();
-  //   for (var hotelPreview in hotelPreviews) {
-  //     List data = getDataDioFrom(urlBase + hotelPreview.uuid!);
-  //     hotels = data.map<Hotel>((hotel) => Hotel.fromJson(hotel)).toList();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Hotels'),
         actions: [
           IconButton(
             onPressed: () {

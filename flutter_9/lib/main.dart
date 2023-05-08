@@ -20,11 +20,12 @@ class MainApp extends StatelessWidget {
             return MaterialPageRoute(builder: (builder) => const HomePage());
           case HotelPage.routeName:
             final args = settings.arguments as Map<String, dynamic>;
-            if (args.containsKey('hotel')) 
+            if (args.containsKey('hotel')) {
               return MaterialPageRoute(builder: (builder) => HotelPage(
                 hotel: args['hotel'],
               ));
-            return MaterialPageRoute(builder: (builder)=> const HomePage());
+            }
+            return MaterialPageRoute(builder: (builder) => const HomePage());
           default:
         }
       },
