@@ -1,0 +1,7 @@
+# ninja log v5
+1	1185	708608954	CMakeFiles/foo.dir/E_/flutter_course/flutter_19/src/foo.cpp.o	244ce72b86e7d0e1
+1187	1349	708608954	E:/flutter_course/flutter_19/build/app/intermediates/cxx/Debug/1m3l3312/obj/x86/libfoo.so	900d6e609d028e07
+0	124	708609571	CMakeFiles/simple.dir/E_/flutter_course/flutter_19/src/simple.c.o	4d6c1b50d06ee5e5
+124	236	708609571	E:/flutter_course/flutter_19/build/app/intermediates/cxx/Debug/1m3l3312/obj/x86/libsimple.so	54a6d9b331884ca7
+9	192	708612875	CMakeFiles/simple.dir/E_/flutter_course/flutter_19/src/simple.c.o	4d6c1b50d06ee5e5
+192	369	708612875	E:/flutter_course/flutter_19/build/app/intermediates/cxx/Debug/1m3l3312/obj/x86/libsimple.so	54a6d9b331884ca7

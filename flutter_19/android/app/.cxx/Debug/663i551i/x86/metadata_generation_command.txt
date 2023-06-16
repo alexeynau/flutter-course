@@ -1,0 +1,18 @@
+                    -HD:\flutter_course\flutter_19\android\app
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_SYSTEM_VERSION=16
+-DANDROID_PLATFORM=android-16
+-DANDROID_ABI=x86
+-DCMAKE_ANDROID_ARCH_ABI=x86
+-DANDROID_NDK=D:\Local\Android\ndk\23.1.7779620
+-DCMAKE_ANDROID_NDK=D:\Local\Android\ndk\23.1.7779620
+-DCMAKE_TOOLCHAIN_FILE=D:\Local\Android\ndk\23.1.7779620\build\cmake\android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=D:\Local\Android\cmake\3.18.1\bin\ninja.exe
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=D:\flutter_course\flutter_19\build\app\intermediates\cxx\Debug\663i551i\obj\x86
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=D:\flutter_course\flutter_19\build\app\intermediates\cxx\Debug\663i551i\obj\x86
+-DCMAKE_BUILD_TYPE=Debug
+-BD:\flutter_course\flutter_19\android\app\.cxx\Debug\663i551i\x86
+-GNinja
+                    Build command args: []
+                    Version: 2

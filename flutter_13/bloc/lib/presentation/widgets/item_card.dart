@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:provider/provider.dart';
 
 import '../../data/models/item_model.dart';
 import '../../domain/main_bloc.dart';
 
-class ItemCard extends StatefulWidget {
+class ItemCard extends StatelessWidget {
   final ItemModel item;
-  final MainBloc bloc;
-  const ItemCard({super.key, required this.item, required this.bloc});
-  @override
-  State<ItemCard> createState() => _ItemCardState();
-}
+  const ItemCard({
+    super.key,
+    required this.item,
+  });
 
-class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,15 +22,16 @@ class _ItemCardState extends State<ItemCard> {
       child: Column(
         children: [
           Text(
-            widget.item.name,
-            style: TextStyle(
+           item.name,
+            style: const TextStyle(
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(widget.item.about),
+          Text(item.about),
           ElevatedButton(
-            onPressed: () => widget.bloc.action.add(AddToCart(widget.item)),
-            child: Icon(Icons.add),
+            onPressed: () =>
+                BlocProvider.of<MainBloc>(context).add(AddToCart(item)),
+            child: const Icon(Icons.add),
           )
         ],
       ),

@@ -18,8 +18,6 @@ class _HomePageState extends State<HomePage> {
   late XFile lastImg;
 
   Future<void> cameraInit() async {
-    // WidgetsFlutterBinding.ensureInitialized();
-
     _cameras = await availableCameras();
 
     controller = CameraController(_cameras[0], ResolutionPreset.max);
@@ -40,9 +38,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool isCamera = true;
+  int _bottomIndex = 0;
   @override
   Widget build(BuildContext context) {
-    int _bottomIndex = 0;
     if (!controller.value.isInitialized) {
       return Container();
     }
@@ -52,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('My Camera'),
         ),
-        body: isCamera
+        body: _bottomIndex == 0
             ? controller.value.isInitialized == true
                 ? Container(
                     child: Stack(

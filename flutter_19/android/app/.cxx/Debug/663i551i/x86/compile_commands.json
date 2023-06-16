@@ -1,0 +1,7 @@
+[
+{
+  "directory": "D:/flutter_course/flutter_19/android/app/.cxx/Debug/663i551i/x86",
+  "command": "D:\\Local\\Android\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=i686-none-linux-android16 --gcc-toolchain=D:/Local/Android/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=D:/Local/Android/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dfoo_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles\\foo.dir\\D_\\flutter_course\\flutter_19\\src\\foo.cpp.o -c D:\\flutter_course\\flutter_19\\src\\foo.cpp",
+  "file": "D:\\flutter_course\\flutter_19\\src\\foo.cpp"
+}
+]
