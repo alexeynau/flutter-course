@@ -1,0 +1,23 @@
+[
+    {
+    "category_name" : "name",
+    "content" : [
+        {
+            "name":"GTA",
+            "description":"bla-bla-bla"
+        },
+        {
+            "name":"GTA",
+            "description":"bla-bla-bla"
+        }
+        ]
+    },
+    {
+    "category_name" : "name1",
+    "content" : []
+    },
+        {
+    "category_name" : "name2",
+    "content" : []
+    }
+]
