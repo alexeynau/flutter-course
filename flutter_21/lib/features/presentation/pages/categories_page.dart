@@ -4,6 +4,8 @@ import 'package:flutter_21/features/data/repositories/repository_impl.dart';
 import 'package:flutter_21/features/domain/repositories/repository.dart';
 import 'package:flutter_21/features/presentation/pages/current_category_page.dart';
 
+import 'photo_loader.dart';
+
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
 
@@ -54,6 +56,24 @@ class _CategoriesPageState extends State<CategoriesPage> {
           }
           return Text('Нет данных');
         },
+      ),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              ListTile(
+                title: Text('PhotoLoader'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => PhotoLoader(repository: repository),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
