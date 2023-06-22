@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_21/features/domain/repositories/repository.dart';
@@ -13,6 +14,19 @@ class PhotoLoader extends StatefulWidget {
 
 class _PhotoLoaderState extends State<PhotoLoader> {
   final TextEditingController _textController = TextEditingController();
+  late List<Uint8List> rawPhotos;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPhotos();
+  }
+
+  initPhotos() async {
+    rawPhotos = await widget.repository.loadPhotos();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +36,21 @@ class _PhotoLoaderState extends State<PhotoLoader> {
       body: FutureBuilder(
         future: widget.repository.loadPhotos(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print(snapshot.data);
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return Image.memory(snapshot.data![index]);
-              },
-              itemCount: snapshot.data!.length,
-            );
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              if (snapshot.hasData) {
+                print(snapshot.data);
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Image.memory(snapshot.data![index]);
+                  },
+                  itemCount: snapshot.data!.length,
+                );
+              }
+              return Text('Нет данных');
+            default:
+              return Text('Нет данных');
           }
-          return Text('Нет данных');
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -46,6 +65,7 @@ class _PhotoLoaderState extends State<PhotoLoader> {
                     TextField(
                       controller: _textController,
                     ),
+                    // download and save image using url given in text field
                     ElevatedButton(
                       onPressed: () {
                         setState(() {});

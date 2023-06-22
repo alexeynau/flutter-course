@@ -3,6 +3,7 @@ import 'package:flutter_21/features/data/models/category_model.dart';
 import 'package:flutter_21/features/data/repositories/repository_impl.dart';
 import 'package:flutter_21/features/domain/repositories/repository.dart';
 import 'package:flutter_21/features/presentation/pages/current_category_page.dart';
+import 'package:flutter_21/features/presentation/pages/users_page.dart';
 
 import 'photo_loader.dart';
 
@@ -67,6 +68,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => PhotoLoader(repository: repository),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('Users Page'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => UsersPage(repository: repository),
                     ),
                   );
                 },

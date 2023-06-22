@@ -10,12 +10,17 @@ abstract class RemoteDatasource {
 class RemoteDatasourceImpl implements RemoteDatasource {
   final http.Client httpClient = http.Client();
 
+  /// download image from url, throws [Exception] on any error
+  ///
+  /// returns path to downloaded image
   @override
   Future<String> downloadImage(String url) async {
     Directory directory = await getApplicationDocumentsDirectory();
 
     String imageName = url.substring(url.lastIndexOf('/') + 1);
+
     var imagePath = join(directory.path, '$imageName');
+
     await httpClient.get(Uri.parse(url)).then((response) {
       File(imagePath).writeAsBytes(response.bodyBytes);
     }).onError((error, stackTrace) {
