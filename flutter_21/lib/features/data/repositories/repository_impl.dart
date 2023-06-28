@@ -1,19 +1,19 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter_21/features/data/datasources/local_datasource.dart';
-import 'package:flutter_21/features/data/datasources/remote_datasource.dart';
-import 'package:flutter_21/features/data/models/category_model.dart';
-import 'package:flutter_21/features/data/models/user.dart';
-import 'package:flutter_21/features/domain/repositories/repository.dart';
+import '../../domain/repositories/repository.dart';
+import '../datasources/local_datasource.dart';
+import '../datasources/remote_datasource.dart';
+import '../models/category_model.dart';
+import '../models/user.dart';
+import '../models/user_card.dart';
 
 class RepositoryImpl implements Repository {
   LocalDatasource localDatasource = LocalDataSourceImpl();
   RemoteDatasource remoteDatasource = RemoteDatasourceImpl();
-  UserDatabase userDatabase = UserDatabase();
   List<Category> listOfCategories = [];
   List<String> listOfPhotos = [];
   List<Uint8List> listOfRawPhotos = [];
+  List<UserCard> listOfUserCards = [];
 
   /// add new category to list and cache
   @override
@@ -25,7 +25,9 @@ class RepositoryImpl implements Repository {
   /// load categories
   @override
   Future<List<Category>> loadCategories() async {
-    return await localDatasource.loadCategories();
+    // print(localDatasource.loadCategories());
+    listOfCategories = await localDatasource.loadCategories();
+    return localDatasource.loadCategories();
   }
 
   @override
@@ -36,7 +38,7 @@ class RepositoryImpl implements Repository {
   Future<void> addPhoto(String url) async {
     String pathToPhoto = await remoteDatasource.downloadImage(url);
     listOfPhotos.add(pathToPhoto);
-    await localDatasource.cachePhotos(listOfPhotos);
+    localDatasource.cachePhotos(listOfPhotos);
   }
 
   /// load photos
@@ -48,12 +50,49 @@ class RepositoryImpl implements Repository {
 
   /// load users from database
   @override
-  Future<List<User>> loadUsers() {
-    return userDatabase.allUserEntries;
+  Future<List<User>> loadUsers() async {
+    (await localDatasource.loadUsers()).forEach((element) {
+      print(element.id);
+    });
+    return localDatasource.loadUsers();
+  }
+
+  /// add user to data base
+  @override
+  addUser(User user) {
+    localDatasource.addUser(user);
+  }
+
+  /// delete user from data base
+  @override
+  deleteUser(int id) {
+    print("delete $id");
+    localDatasource.deleteUser(id);
   }
 
   @override
-  addUser(User user) {
-    userDatabase.insertUser(user);
+  addCard(UserCard userCard) {
+    listOfUserCards.add(userCard);
+    localDatasource.cacheCard(listOfUserCards);
   }
+
+  @override
+  Future<List<UserCard>> loadAllCards() async {
+    return localDatasource.loadCards();
+  }
+
+  @override
+  UserCard loadCard(int id) {
+    return listOfUserCards
+        .firstWhere((userCard) => userCard.id == "${id}_user_card_id");
+  }
+
+  @override
+  deleteAllUsers() {
+    localDatasource.deleteAllUsers();
+    listOfUserCards.clear();
+  }
+
+  @override
+  List<Uint8List> get photos => listOfRawPhotos;
 }

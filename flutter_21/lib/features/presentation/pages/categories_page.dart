@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_21/features/data/models/category_model.dart';
-import 'package:flutter_21/features/data/repositories/repository_impl.dart';
-import 'package:flutter_21/features/domain/repositories/repository.dart';
-import 'package:flutter_21/features/presentation/pages/current_category_page.dart';
-import 'package:flutter_21/features/presentation/pages/users_page.dart';
+import 'package:flutter_21/features/presentation/bloc/bloc/list_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/category_model.dart';
+import '../../data/repositories/repository_impl.dart';
+import '../../domain/repositories/repository.dart';
+import 'current_category_page.dart';
+import 'users_page.dart';
 
 import 'photo_loader.dart';
 
@@ -21,6 +23,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ListBloc>(context).add(ListInit());
   }
 
   @override
@@ -29,33 +32,29 @@ class _CategoriesPageState extends State<CategoriesPage> {
       appBar: AppBar(
         title: Text('Categories'),
       ),
-      body: FutureBuilder(
-        future: repository.loadCategories(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print(snapshot.data);
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    snapshot.data![index].categoryName,
-                  ),
-                  tileColor: Colors.lightGreen,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CurrentCategoryPage(
-                            repository: repository,
-                            category: snapshot.data![index]),
-                      ),
-                    );
-                  },
-                );
-              },
-              itemCount: snapshot.data!.length,
-            );
-          }
-          return Text('Нет данных');
+      body: BlocBuilder<ListBloc, ListState>(
+        builder: (context, state) {
+          List<Category> categories =
+              BlocProvider.of<ListBloc>(context).repository.categories;
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  categories[index].categoryName,
+                ),
+                tileColor: Colors.lightGreen,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CurrentCategoryPage(
+                          repository: repository, category: categories[index]),
+                    ),
+                  );
+                },
+              );
+            },
+            itemCount: categories.length,
+          );
         },
       ),
       drawer: Drawer(
@@ -100,10 +99,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        setState(() {});
-                        repository.addCategory(
-                          Category(
-                              categoryName: _textController.text, content: []),
+                        BlocProvider.of<ListBloc>(context).add(
+                          AddToCategoryListEvent(
+                            Category(
+                              categoryName: _textController.text,
+                              content: [],
+                            ),
+                          ),
                         );
                         Navigator.of(context).pop();
                       },

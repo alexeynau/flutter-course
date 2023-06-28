@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_21/features/data/models/category_model.dart';
-import 'package:flutter_21/features/domain/repositories/repository.dart';
-import 'package:flutter_21/features/presentation/pages/element_page.dart';
-import 'package:flutter_21/features/presentation/pages/photo_loader.dart';
+import '../../data/models/category_model.dart';
+import '../../domain/repositories/repository.dart';
+import 'element_page.dart';
 
 class CurrentCategoryPage extends StatefulWidget {
   final Repository repository;
@@ -48,25 +47,6 @@ class _CurrentCategoryPageState extends State<CurrentCategoryPage> {
         }
         return const Text('Пусто');
       }),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            children: [
-              ListTile(
-                title: Text('PhotoLoader'),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          PhotoLoader(repository: widget.repository),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(

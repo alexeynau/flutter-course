@@ -28,6 +28,9 @@ class UserDatabase extends _$UserDatabase {
 
   Future<List<User>> get allUserEntries => select(users).get();
   Future<int> insertUser(User user) => into(users).insert(user);
+  Future deleteUser(int id) =>
+      (delete(users)..where((t) => t.id.isValue(id))).go();
+  Future deleteAll() => delete(users).go();
 
   @override
   int get schemaVersion => 1;

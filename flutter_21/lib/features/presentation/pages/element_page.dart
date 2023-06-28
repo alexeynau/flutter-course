@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_21/features/data/models/category_model.dart';
+
+import '../../data/models/category_model.dart';
 
 class ElementPage extends StatelessWidget {
   final Content content;

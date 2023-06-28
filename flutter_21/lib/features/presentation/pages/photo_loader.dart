@@ -1,8 +1,10 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_21/features/domain/repositories/repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/repositories/repository.dart';
+import '../bloc/bloc/list_bloc.dart';
 
 class PhotoLoader extends StatefulWidget {
   final Repository repository;
@@ -14,17 +16,12 @@ class PhotoLoader extends StatefulWidget {
 
 class _PhotoLoaderState extends State<PhotoLoader> {
   final TextEditingController _textController = TextEditingController();
-  late List<Uint8List> rawPhotos;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    initPhotos();
-  }
 
-  initPhotos() async {
-    rawPhotos = await widget.repository.loadPhotos();
+    BlocProvider.of<ListBloc>(context).add(ListInit());
   }
 
   @override
@@ -33,26 +30,39 @@ class _PhotoLoaderState extends State<PhotoLoader> {
       appBar: AppBar(
         title: Text('Photo Loader'),
       ),
-      body: FutureBuilder(
-        future: widget.repository.loadPhotos(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                print(snapshot.data);
-                return ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Image.memory(snapshot.data![index]);
-                  },
-                  itemCount: snapshot.data!.length,
-                );
-              }
-              return Text('Нет данных');
-            default:
-              return Text('Нет данных');
-          }
+      body: BlocBuilder<ListBloc, ListState>(
+        builder: (context, state) {
+          List<Uint8List> photos =
+              BlocProvider.of<ListBloc>(context).repository.photos;
+          print("in builder ${photos.length}");
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return Image.memory(photos[index]);
+            },
+            itemCount: photos.length,
+          );
         },
       ),
+
+      //  FutureBuilder(
+      //   future: widget.repository.loadPhotos(),
+      //   builder: (context, snapshot) {
+      //     switch (snapshot.connectionState) {
+      //       case ConnectionState.done:
+      //         if (snapshot.hasData) {
+      //           return ListView.builder(
+      //             itemBuilder: (context, index) {
+      //               return Image.memory(snapshot.data![index]);
+      //             },
+      //             itemCount: snapshot.data!.length,
+      //           );
+      //         }
+      //         return Text('Нет данных');
+      //       default:
+      //         return Text('Нет данных');
+      //     }
+      //   },
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -68,9 +78,9 @@ class _PhotoLoaderState extends State<PhotoLoader> {
                     // download and save image using url given in text field
                     ElevatedButton(
                       onPressed: () {
-                        setState(() {});
-                        widget.repository.addPhoto(_textController.text);
-                        Navigator.of(context).pop();
+                        BlocProvider.of<ListBloc>(context)
+                            .add(AddToPhotoListEvent(_textController.text));
+                        Navigator.of(context).pop(_textController.text);
                       },
                       child: const Icon(
                         Icons.check,
@@ -82,6 +92,15 @@ class _PhotoLoaderState extends State<PhotoLoader> {
               );
             },
           );
+          // .then(
+          //   (value) {
+          //     if (value is String) {
+          //       setState(() {
+          //         widget.repository.addPhoto(_textController.text);
+          //       });
+          //     }
+          //   },
+          // );
         },
         child: const Icon(Icons.add),
       ),

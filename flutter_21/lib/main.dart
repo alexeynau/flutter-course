@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_21/features/presentation/pages/categories_page.dart';
-import 'package:flutter_21/features/presentation/pages/users_page.dart';
+import 'package:flutter_21/features/presentation/bloc/bloc/list_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/presentation/pages/categories_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,8 +12,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CategoriesPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ListBloc>(
+          create: (context) => ListBloc(),
+        )
+      ],
+      child: const MaterialApp(
+        home: CategoriesPage(),
+      ),
     );
   }
 }
